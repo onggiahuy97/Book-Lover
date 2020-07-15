@@ -8,34 +8,40 @@
 import SwiftUI
 
 struct SearchBookView: View {
+    @Environment(\.presentationMode) var presentation
+    
     @State private var books = [BookAPIResult]()
     @State private var isSearching = true
-//    @Binding var book: Book
     
     var body: some View {
-        VStack {
-            SearchBar(books: $books, isSearching: $isSearching)
-            
-            if isSearching {
-                LoadingView()
-                Spacer()
-            } else {
-                if books.isEmpty {
-                    Text("Can't find the book")
+        NavigationView {
+            VStack {
+                SearchBar(books: $books, isSearching: $isSearching)
+                
+                if isSearching {
+                    LoadingView()
                     Spacer()
                 } else {
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 10) {
-                            ForEach(books, id: \.self) { book in
-                                BookAPIDetailView(book: book)
-                                    .onTapGesture {
-                                        
-                                    }
+                    if books.isEmpty {
+                        Text("Can't find the book")
+                        Spacer()
+                    } else {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 10) {
+                                ForEach(books, id: \.self) { book in
+                                    BookAPIDetailView(book: book)
+                                }
                             }
                         }
                     }
                 }
             }
+            .navigationBarTitle("Search", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                presentation.wrappedValue.dismiss()
+            }) {
+                Text("Cancel")
+            })
         }
     }
 }

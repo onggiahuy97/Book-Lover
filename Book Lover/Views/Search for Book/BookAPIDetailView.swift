@@ -10,15 +10,18 @@ import SDWebImageSwiftUI
 
 struct BookAPIDetailView: View {
     var book: BookAPIResult
+    
     let screen = UIScreen.main.bounds
+    let width: CGFloat = 86
+    let scale: CGFloat = 1.45
     
     var body: some View {
         HStack {
             WebImage(url: URL(string: book.artworkUrl100))
                 .resizable()
-                .scaledToFit()
-                .shadow(radius: 10)
-                .cornerRadius(5)
+                .frame(width: width, height: width * scale)
+                .cornerRadius(3.0)
+                .shadow(radius: 10, x: 0, y: 5)
             
             VStack(alignment: .leading) {
                 Text(book.trackName)
@@ -31,6 +34,6 @@ struct BookAPIDetailView: View {
             Spacer()
         }
         .padding(.horizontal)
-        .frame(width: screen.width, height: 100)
+        .frame(width: screen.width, height: width * scale + 10)
     }
 }
