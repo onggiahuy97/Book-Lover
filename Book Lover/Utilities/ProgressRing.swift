@@ -32,8 +32,3 @@ struct ProgressRing: View {
     }
 }
 
-//struct ProgressRing_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProgressRing()
-//    }
-//}
