@@ -12,8 +12,6 @@ struct BookCardDetail: View {
     
     @ObservedObject var book: CDBook
     
-    @State var updates: [CDBookUpdate] = []
-    
     @State var isUpdating = false
     
     var body: some View {
@@ -39,21 +37,24 @@ struct BookCardDetail: View {
             
             Divider()
             List {
-                ForEach(updates.indices, id: \.self) { index in
-                    NavigationLink(destination: DetailProgressUpdate(update: updates[index])) {
-                        ProgressUpdateView(update: updates[index])
+                if let bookUpdates = book.updates?.allObjects as? [CDBookUpdate] {
+                    ForEach(0..<bookUpdates.count, id: \.self) { index in
+                        NavigationLink(destination: DetailProgressUpdate(update: bookUpdates[index])) {
+                            ProgressUpdateView(update: bookUpdates[index])
+                        }
+                        
                     }
                 }
             }
         }
         .padding(.top, 10)
         .navigationBarTitle(Text(book.title ?? ""), displayMode: .inline)
-        .navigationBarItems(trailing: Button(action: {
-            guard let updatesData = book.updates?.allObjects as? [CDBookUpdate] else { return }
-            updates = updatesData.sorted { $0.date! < $1.date! }
-        }) {
-            Text("Fetch updates")
-        })
+//        .navigationBarItems(trailing: Button(action: {
+//            guard let updatesData = book.updates?.allObjects as? [CDBookUpdate] else { return }
+//            updates = updatesData.sorted { $0.date! < $1.date! }
+//        }) {
+//            Text("Fetch updates")
+//        })
     }
 }
 

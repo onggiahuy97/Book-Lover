@@ -67,7 +67,7 @@ struct SearchBookView: View {
         let selectedBook = CDBook(context: context)
         selectedBook.title = book.trackName
         selectedBook.author = book.artistName
-        selectedBook.progress = 0.05
+        selectedBook.progress = 0.01
         
         URLSession.shared.dataTask(with: URL(string: book.artworkUrl100)!) { (data, _, err) in
             if let err = err {
