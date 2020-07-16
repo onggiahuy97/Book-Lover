@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct SearchBookView: View {
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.managedObjectContext) var context
+    
+    @Binding var isShowSearh: Bool
     
     @State private var books = [BookAPIResult]()
+    @State private var selectedBook: BookAPIResult?
     @State private var isSearching = true
+    @State private var isConforming = false
     
     var body: some View {
         NavigationView {
@@ -30,6 +34,10 @@ struct SearchBookView: View {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(books, id: \.self) { book in
                                     BookAPIDetailView(book: book)
+                                        .onTapGesture {
+                                            isConforming = true
+                                            selectedBook = book
+                                        }
                                 }
                             }
                         }
@@ -38,18 +46,40 @@ struct SearchBookView: View {
             }
             .navigationBarTitle("Search", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
-                presentation.wrappedValue.dismiss()
+                isShowSearh = false
             }) {
                 Text("Cancel")
             })
+            .alert(isPresented: $isConforming) {
+                Alert(
+                    title: Text("Pick this book?"),
+                    message: Text("Add to library"),
+                    primaryButton: .default(Text("Yes!"), action: {
+                        pickThisBook(book: selectedBook!)
+                        isShowSearh = false
+                    }),
+                    secondaryButton: .cancel())
+            }
         }
     }
-}
-
-
-
-struct SearchBookView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchBookView()
+    
+    fileprivate func pickThisBook(book: BookAPIResult) {
+        let selectedBook = CDBook(context: context)
+        selectedBook.title = book.trackName
+        selectedBook.author = book.artistName
+        selectedBook.progress = 0.05
+        
+        URLSession.shared.dataTask(with: URL(string: book.artworkUrl100)!) { (data, _, err) in
+            if let err = err {
+                print("Failed to donwload book image", err)
+                return
+            }
+            guard let data = data else { return }
+            selectedBook.image = UIImage(data: data)?.jpegData(compressionQuality: 0.8)
+        }.resume()
+        
+        do { try context.save() } catch let err { print("Failed to save context", err) }
+        
     }
 }
+

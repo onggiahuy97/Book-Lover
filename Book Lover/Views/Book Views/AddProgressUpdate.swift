@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct AddProgressUpdate: View {
-    @Binding var book: Book
+    @Environment(\.managedObjectContext) var context
+
+    var book: CDBook
+
+    @Binding var isShowAdd: Bool
+
     @State private var progress: CGFloat = 0
     @State private var text = ""
+    
     
     var body: some View {
         NavigationView {
@@ -32,34 +39,41 @@ struct AddProgressUpdate: View {
                     }
                 }
             }
-            .modifier(modifyNavigation(book: $book, progress: $progress, text: $text))
+            .modifier(modifyNavigation(book: book, progress: $progress, text: $text, isShowAdd: $isShowAdd))
         }
     }
     
     private struct modifyNavigation: ViewModifier {
-        @Environment(\.presentationMode) var presentationMode
-        @Binding var book: Book
+        @Environment(\.managedObjectContext) var context
+        
+        var book: CDBook
+        
         @Binding var progress: CGFloat
         @Binding var text: String
+        @Binding var isShowAdd: Bool
         
         func body(content: Content) -> some View {
             content
                 .navigationBarTitle(Text("Updating Progress"), displayMode: .inline)
                 .navigationBarItems(leading: Button(action: {
-                    dismiss()
+                    isShowAdd = false
                 }) {
                     Text("Cancel")
                 }, trailing: Button(action: {
-                    let bookUpdate = BookUpdate(progress: Double(progress), date: Date(), note: text)
-                    book.updates.append(bookUpdate)
+                    let update = NSEntityDescription.insertNewObject(forEntityName: "CDBookUpdate", into: context) as! CDBookUpdate
+                    update.date = Date()
+                    update.note = text
+                    update.progress = Double(progress)
+                    update.book = book
+                    
                     book.progress = Double(progress)
-                    dismiss()
+                    
+                    do { try context.save() } catch let err { print("Failed to save", err) }
+                    
+                    isShowAdd = false
                 }) {
                     Text("Save")
                 })
-        }
-        private func dismiss() {
-            presentationMode.wrappedValue.dismiss()
         }
     }
 }

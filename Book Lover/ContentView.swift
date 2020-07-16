@@ -6,26 +6,37 @@
 //
 
 import SwiftUI
-
+import CoreData
 
 struct ContentView: View {
+    @FetchRequest var coreDataBooks: FetchedResults<CDBook>
+    @Environment(\.managedObjectContext) private var context
+    
     @State private var showSearching = false
     
-    @ObservedObject var model = BookViewModel()
+    init() {
+        let request = NSFetchRequest<CDBook>(entityName: "CDBook")
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        _coreDataBooks = FetchRequest(fetchRequest: request)
+    }
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(model.books.indices, id: \.self) { index in
-                    NavigationLink(destination: BookCardDetail(book: $model.books[index])) {
-                        BookCard(book: model.books[index])
+                ForEach(coreDataBooks.indices, id: \.self) { index in
+                    NavigationLink(destination: BookCardDetail(book: coreDataBooks[index])) {
+                        BookCard(book: coreDataBooks[index])
                     }
                 }
+                .onDelete { (indexSet) in
+                    guard let index = indexSet.first else { return }
+                    context.delete(coreDataBooks[index])
+                    try? context.save()
+                }
             }
-            .environmentObject(model)
             .listStyle(PlainListStyle())
             .sheet(isPresented: $showSearching) {
-                SearchBookView()
+                SearchBookView(isShowSearh: $showSearching).environment(\.managedObjectContext, context)
             }
             .navigationTitle(Text("Books"))
             .navigationBarItems(trailing: Button(action: {

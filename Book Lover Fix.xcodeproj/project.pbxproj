@@ -28,12 +28,14 @@
 		3EA6A72924BEB0DE0005C6A1 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A72824BEB0DE0005C6A1 /* Date+Extension.swift */; };
 		3EA6A72B24BEB19D0005C6A1 /* ProgressUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A72A24BEB19D0005C6A1 /* ProgressUpdateView.swift */; };
 		3EA6A72D24BEB3F10005C6A1 /* AddProgressUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A72C24BEB3F10005C6A1 /* AddProgressUpdate.swift */; };
-		3EA6A73024BEC6720005C6A1 /* BookViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A72F24BEC6720005C6A1 /* BookViewModel.swift */; };
 		3EA6A73224BECCDA0005C6A1 /* DetailProgressUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A73124BECCDA0005C6A1 /* DetailProgressUpdate.swift */; };
+		3EA6A73624BF65EC0005C6A1 /* TestCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A73524BF65EC0005C6A1 /* TestCoreData.swift */; };
+		3EA6A73824BFC88A0005C6A1 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A73724BFC88A0005C6A1 /* MainView.swift */; };
+		3EA6A73B24BFC8CF0005C6A1 /* SettingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6A73A24BFC8CF0005C6A1 /* SettingViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3EA6A6EE24BE17530005C6A1 /* Book Lover.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Lover.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EA6A6EE24BE17530005C6A1 /* Book Lover Fix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Book Lover Fix.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EA6A6F124BE17530005C6A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3EA6A6F324BE17530005C6A1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		3EA6A6F624BE17530005C6A1 /* Book_Lover.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Book_Lover.xcdatamodel; sourceTree = "<group>"; };
@@ -55,8 +57,10 @@
 		3EA6A72824BEB0DE0005C6A1 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		3EA6A72A24BEB19D0005C6A1 /* ProgressUpdateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressUpdateView.swift; sourceTree = "<group>"; };
 		3EA6A72C24BEB3F10005C6A1 /* AddProgressUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProgressUpdate.swift; sourceTree = "<group>"; };
-		3EA6A72F24BEC6720005C6A1 /* BookViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookViewModel.swift; sourceTree = "<group>"; };
 		3EA6A73124BECCDA0005C6A1 /* DetailProgressUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailProgressUpdate.swift; sourceTree = "<group>"; };
+		3EA6A73524BF65EC0005C6A1 /* TestCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCoreData.swift; sourceTree = "<group>"; };
+		3EA6A73724BFC88A0005C6A1 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		3EA6A73A24BFC8CF0005C6A1 /* SettingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,7 +86,7 @@
 		3EA6A6EF24BE17530005C6A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EA6A6EE24BE17530005C6A1 /* Book Lover.app */,
+				3EA6A6EE24BE17530005C6A1 /* Book Lover Fix.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,7 +94,6 @@
 		3EA6A6F024BE17530005C6A1 /* Book Lover */ = {
 			isa = PBXGroup;
 			children = (
-				3EA6A72E24BEC66A0005C6A1 /* ViewModel */,
 				3EA6A72724BEB0D10005C6A1 /* Extensions */,
 				3EA6A71824BE56680005C6A1 /* Utilities */,
 				3EA6A70E24BE1EEA0005C6A1 /* Views */,
@@ -99,6 +102,7 @@
 				3EA6A6F124BE17530005C6A1 /* AppDelegate.swift */,
 				3EA6A6F324BE17530005C6A1 /* SceneDelegate.swift */,
 				3EA6A6F824BE17530005C6A1 /* ContentView.swift */,
+				3EA6A73724BFC88A0005C6A1 /* MainView.swift */,
 				3EA6A6FA24BE17530005C6A1 /* Assets.xcassets */,
 				3EA6A6FF24BE17530005C6A1 /* LaunchScreen.storyboard */,
 				3EA6A70224BE17530005C6A1 /* Info.plist */,
@@ -120,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA6A70924BE17D10005C6A1 /* APIService.swift */,
+				3EA6A73524BF65EC0005C6A1 /* TestCoreData.swift */,
 			);
 			path = APIService;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 		3EA6A70E24BE1EEA0005C6A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3EA6A73924BFC8C40005C6A1 /* Settings */,
 				3EA6A71E24BE8B6C0005C6A1 /* Book Views */,
 				3EA6A71B24BE590D0005C6A1 /* Search for Book */,
 			);
@@ -181,20 +187,20 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		3EA6A72E24BEC66A0005C6A1 /* ViewModel */ = {
+		3EA6A73924BFC8C40005C6A1 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				3EA6A72F24BEC6720005C6A1 /* BookViewModel.swift */,
+				3EA6A73A24BFC8CF0005C6A1 /* SettingViews.swift */,
 			);
-			path = ViewModel;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3EA6A6ED24BE17530005C6A1 /* Book Lover */ = {
+		3EA6A6ED24BE17530005C6A1 /* Book Lover Fix */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3EA6A70524BE17530005C6A1 /* Build configuration list for PBXNativeTarget "Book Lover" */;
+			buildConfigurationList = 3EA6A70524BE17530005C6A1 /* Build configuration list for PBXNativeTarget "Book Lover Fix" */;
 			buildPhases = (
 				3EA6A6EA24BE17530005C6A1 /* Sources */,
 				3EA6A6EB24BE17530005C6A1 /* Frameworks */,
@@ -204,12 +210,12 @@
 			);
 			dependencies = (
 			);
-			name = "Book Lover";
+			name = "Book Lover Fix";
 			packageProductDependencies = (
 				3EA6A71424BE3A810005C6A1 /* SDWebImageSwiftUI */,
 			);
 			productName = "Book Lover";
-			productReference = 3EA6A6EE24BE17530005C6A1 /* Book Lover.app */;
+			productReference = 3EA6A6EE24BE17530005C6A1 /* Book Lover Fix.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -226,7 +232,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3EA6A6E924BE17530005C6A1 /* Build configuration list for PBXProject "Book Lover" */;
+			buildConfigurationList = 3EA6A6E924BE17530005C6A1 /* Build configuration list for PBXProject "Book Lover Fix" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -242,7 +248,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3EA6A6ED24BE17530005C6A1 /* Book Lover */,
+				3EA6A6ED24BE17530005C6A1 /* Book Lover Fix */,
 			);
 		};
 /* End PBXProject section */
@@ -267,10 +273,11 @@
 			files = (
 				3EA6A6F724BE17530005C6A1 /* Book_Lover.xcdatamodeld in Sources */,
 				3EA6A70D24BE1A440005C6A1 /* BookAPI.swift in Sources */,
+				3EA6A73824BFC88A0005C6A1 /* MainView.swift in Sources */,
 				3EA6A72624BEAC640005C6A1 /* Book.swift in Sources */,
+				3EA6A73624BF65EC0005C6A1 /* TestCoreData.swift in Sources */,
 				3EA6A72224BE8CF70005C6A1 /* ProgressRing.swift in Sources */,
 				3EA6A70A24BE17D10005C6A1 /* APIService.swift in Sources */,
-				3EA6A73024BEC6720005C6A1 /* BookViewModel.swift in Sources */,
 				3EA6A72924BEB0DE0005C6A1 /* Date+Extension.swift in Sources */,
 				3EA6A72B24BEB19D0005C6A1 /* ProgressUpdateView.swift in Sources */,
 				3EA6A71A24BE56710005C6A1 /* LoadingView.swift in Sources */,
@@ -282,6 +289,7 @@
 				3EA6A71224BE39CC0005C6A1 /* SearchBar.swift in Sources */,
 				3EA6A73224BECCDA0005C6A1 /* DetailProgressUpdate.swift in Sources */,
 				3EA6A6F924BE17530005C6A1 /* ContentView.swift in Sources */,
+				3EA6A73B24BFC8CF0005C6A1 /* SettingViews.swift in Sources */,
 				3EA6A6F424BE17530005C6A1 /* SceneDelegate.swift in Sources */,
 				3EA6A72D24BEB3F10005C6A1 /* AddProgressUpdate.swift in Sources */,
 			);
@@ -464,7 +472,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3EA6A6E924BE17530005C6A1 /* Build configuration list for PBXProject "Book Lover" */ = {
+		3EA6A6E924BE17530005C6A1 /* Build configuration list for PBXProject "Book Lover Fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EA6A70324BE17530005C6A1 /* Debug */,
@@ -473,7 +481,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3EA6A70524BE17530005C6A1 /* Build configuration list for PBXNativeTarget "Book Lover" */ = {
+		3EA6A70524BE17530005C6A1 /* Build configuration list for PBXNativeTarget "Book Lover Fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3EA6A70624BE17530005C6A1 /* Debug */,

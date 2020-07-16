@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct BookCardDetail: View {
-    @State private var isUpdating = false
+    @Environment(\.managedObjectContext) var context
     
-    @Binding var book: Book
+    @ObservedObject var book: CDBook
+    
+    @State var updates: [CDBookUpdate] = []
+    
+    @State var isUpdating = false
     
     var body: some View {
         VStack {
@@ -29,20 +33,27 @@ struct BookCardDetail: View {
                 .padding(.vertical, 5)
             }
             .sheet(isPresented: $isUpdating, onDismiss: nil) {
-                AddProgressUpdate(book: $book)
+                AddProgressUpdate(book: book, isShowAdd: $isUpdating)
+                    .environment(\.managedObjectContext, context)
             }
             
             Divider()
             List {
-                ForEach(book.updates, id: \.self) { update in
-                    NavigationLink(destination: DetailProgressUpdate(update: update)) {
-                        ProgressUpdateView(update: update)
+                ForEach(updates.indices, id: \.self) { index in
+                    NavigationLink(destination: DetailProgressUpdate(update: updates[index])) {
+                        ProgressUpdateView(update: updates[index])
                     }
                 }
             }
         }
         .padding(.top, 10)
-        .navigationBarTitle(Text(book.title), displayMode: .inline)
+        .navigationBarTitle(Text(book.title ?? ""), displayMode: .inline)
+        .navigationBarItems(trailing: Button(action: {
+            guard let updatesData = book.updates?.allObjects as? [CDBookUpdate] else { return }
+            updates = updatesData.sorted { $0.date! < $1.date! }
+        }) {
+            Text("Fetch updates")
+        })
     }
 }
 

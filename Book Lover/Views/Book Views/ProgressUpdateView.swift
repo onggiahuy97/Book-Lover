@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct ProgressUpdateView: View {
-    var update: BookUpdate
+    var update: CDBookUpdate
     
     var body: some View {
         HStack {
             Text("\(Int(update.progress * 100))%")
             Spacer()
-            Text(update.date.toString())
+            Text(update.date?.toString() ?? "N/A")
         }
     }
 }

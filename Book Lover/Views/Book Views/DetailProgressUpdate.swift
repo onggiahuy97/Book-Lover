@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailProgressUpdate: View {
-    var update: BookUpdate
+    var update: CDBookUpdate
     
     var body: some View {
         Form {
@@ -17,7 +17,7 @@ struct DetailProgressUpdate: View {
             }
             
             Section(header: Text("Note")) {
-                Text(update.note)
+                Text(update.note ?? "")
             }
         }
     }
