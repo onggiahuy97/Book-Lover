@@ -37,24 +37,22 @@ struct BookCardDetail: View {
             
             Divider()
             List {
-                if let bookUpdates = book.updates?.allObjects as? [CDBookUpdate] {
+                if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate],
+                   let bookUpdates = bookUpdatesUnsorted.sorted { $0.date! < $1.date! } {
                     ForEach(0..<bookUpdates.count, id: \.self) { index in
                         NavigationLink(destination: DetailProgressUpdate(update: bookUpdates[index])) {
                             ProgressUpdateView(update: bookUpdates[index])
                         }
-                        
+                    }
+                    .onDelete { (indexSet) in
+                        book.removeFromUpdates(bookUpdates[indexSet.first!])
+                        try? context.save()
                     }
                 }
             }
         }
         .padding(.top, 10)
         .navigationBarTitle(Text(book.title ?? ""), displayMode: .inline)
-//        .navigationBarItems(trailing: Button(action: {
-//            guard let updatesData = book.updates?.allObjects as? [CDBookUpdate] else { return }
-//            updates = updatesData.sorted { $0.date! < $1.date! }
-//        }) {
-//            Text("Fetch updates")
-//        })
     }
 }
 
