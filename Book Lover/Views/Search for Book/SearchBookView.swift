@@ -33,11 +33,12 @@ struct SearchBookView: View {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 10) {
                                 ForEach(books, id: \.self) { book in
-                                    BookAPIDetailView(book: book)
-                                        .onTapGesture {
-                                            isConforming = true
-                                            selectedBook = book
-                                        }
+                                    Button(action: {
+                                        isConforming = true
+                                        selectedBook = book
+                                    }) {
+                                        BookAPIDetailView(book: book)
+                                    }
                                 }
                             }
                         }

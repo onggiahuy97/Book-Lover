@@ -14,7 +14,7 @@ struct ProgressUpdateView: View {
         HStack {
             Text("\(Int(update.progress * 100))%")
             Spacer()
-            Text(update.date?.toString() ?? "N/A")
+            Text(update.date?.toString(style: .medium) ?? "N/A")
         }
     }
 }

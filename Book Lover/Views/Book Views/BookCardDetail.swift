@@ -25,8 +25,10 @@ struct BookCardDetail: View {
                 isUpdating = true
             }) {
                 HStack {
+                    Spacer()
                     Image(systemName: "book.circle")
                     Text("Update New Progress")
+                    Spacer()
                 }
                 .padding(.vertical, 5)
             }
@@ -40,14 +42,14 @@ struct BookCardDetail: View {
                 if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate],
                    let bookUpdates = bookUpdatesUnsorted.sorted { $0.date! < $1.date! } {
                     ForEach(0..<bookUpdates.count, id: \.self) { index in
-                        NavigationLink(destination: DetailProgressUpdate(update: bookUpdates[index])) {
+                        NavigationLink(destination: DetailProgressUpdate(update: bookUpdates[index], book: book)) {
                             ProgressUpdateView(update: bookUpdates[index])
                         }
                     }
-                    .onDelete { (indexSet) in
-                        book.removeFromUpdates(bookUpdates[indexSet.first!])
-                        try? context.save()
-                    }
+//                    .onDelete { (indexSet) in
+//                        book.removeFromUpdates(bookUpdates[indexSet.first!])
+//                        try? context.save()
+//                    }
                 }
             }
         }

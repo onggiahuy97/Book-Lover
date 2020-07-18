@@ -18,6 +18,7 @@ struct BookAPIDetailView: View {
     var body: some View {
         HStack {
             WebImage(url: URL(string: book.artworkUrl100))
+                .renderingMode(.original)
                 .resizable()
                 .frame(width: width, height: width * scale)
                 .cornerRadius(3.0)
@@ -26,6 +27,8 @@ struct BookAPIDetailView: View {
             VStack(alignment: .leading) {
                 Text(book.trackName)
                     .font(.headline)
+                    .foregroundColor(.black)
+                
                 Text(book.artistName)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
