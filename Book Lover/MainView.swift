@@ -16,7 +16,7 @@ struct MainView: View {
                     Text("Home")
                 }
             
-            SettingViews()
+            SettingViews() // Setup changeable for accent color
                 .tabItem {
                     Image(systemName: "gear")
                     Text("Setting")

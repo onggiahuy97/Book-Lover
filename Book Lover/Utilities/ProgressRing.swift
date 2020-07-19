@@ -22,7 +22,7 @@ struct ProgressRing: View {
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(
-                    LinearGradient(gradient: Gradient(colors: [Color.blue, Color.blue]), startPoint: .topTrailing, endPoint: .bottomLeading),
+                    LinearGradient(gradient: Gradient(colors: [Color("AccentColor"), Color("AccentColor")]), startPoint: .topTrailing, endPoint: .bottomLeading),
                     style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round, miterLimit: .infinity, dash: [20, 0], dashPhase: 0)
                 )
                 .rotationEffect(Angle(degrees: -90))

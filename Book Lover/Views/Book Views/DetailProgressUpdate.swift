@@ -14,8 +14,10 @@ struct DetailProgressUpdate: View {
     @ObservedObject var update: CDBookUpdate
     
     @State private var isDeleting = false
+    @State private var isEditingText = false
+    @State private var string = ""
     
-    var book: CDBook
+    @ObservedObject var book: CDBook
     
     var body: some View {
         Form {
@@ -33,7 +35,23 @@ struct DetailProgressUpdate: View {
             }
             
             Section(header: Text("Quick note")) {
-                Text(update.note ?? "")
+                Button(action: {
+                    isEditingText.toggle()
+                }) {
+                    if !isEditingText {
+                        Text(update.note ?? "")
+                    } else {
+                        TextField("", text: $string) {
+                            isEditingText = false
+                            update.note = string
+                            try? context.save()
+                        }
+                        .onAppear {
+                            string = update.note ?? ""
+                        }
+                    }
+                }
+                .foregroundColor(.black)
             }
             
             Section {
@@ -45,20 +63,40 @@ struct DetailProgressUpdate: View {
                         Image(systemName: "trash")
                         Text("Delete")
                         Spacer()
-                    }.foregroundColor(.red)
+                    }
+                    .foregroundColor(.red)
                 }
             }
         }
         .actionSheet(isPresented: $isDeleting) {
-            ActionSheet(title: Text("Delete this note?"), buttons: [
-                ActionSheet.Button.cancel(),
-                ActionSheet.Button.destructive(Text("Delete"), action: {
-                    book.removeFromUpdates(update)
-                    try? context.save()
-                    presentation.wrappedValue.dismiss()
-                }),
-            ])
+            delete()
         }
     }
 }
 
+extension DetailProgressUpdate {
+    func delete() -> ActionSheet {
+        ActionSheet(title: Text("Delete this note?"), buttons: [
+            ActionSheet.Button.cancel(),
+            ActionSheet.Button.destructive(Text("Delete"), action: {
+                book.removeFromUpdates(update)
+                if book.updates?.count == 0 { book.progress = 0.01 }
+                if book.updates?.count == 1 {
+                    if let bookUpdates = book.updates?.allObjects as? [CDBookUpdate] {
+                        let progress = bookUpdates.first!.progress
+                        book.progress = progress
+                    }
+                }
+                if book.updates?.count ?? 0 > 1 {
+                    if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate] {
+                        let bookUpdatesSorted = bookUpdatesUnsorted.sorted { $0.date! < $1.date! }
+                        let progress = bookUpdatesSorted.last!.progress
+                        book.progress = progress
+                    }
+                }
+                try? context.save()
+                presentation.wrappedValue.dismiss()
+            }),
+        ])
+    }
+}
