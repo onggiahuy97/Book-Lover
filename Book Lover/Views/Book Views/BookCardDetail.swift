@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct BookCardDetail: View {
+    @Environment(\.presentationMode) var presentation
     @Environment(\.managedObjectContext) var context
-    
     @ObservedObject var book: CDBook
-    
     @State var isUpdating = false
+    @State var showDelete = false
     
     var body: some View {
         VStack {
@@ -24,20 +24,21 @@ struct BookCardDetail: View {
             Button(action: {
                 isUpdating = true
             }) {
-                HStack {
+                HStack(alignment: .center) {
                     Spacer()
                     Image(systemName: "book.circle")
                     Text("Update New Progress")
                     Spacer()
                 }
-                .padding(.vertical, 5)
             }
+            .padding(.vertical, 3)
             .sheet(isPresented: $isUpdating, onDismiss: nil) {
-                AddProgressUpdate(book: book, isShowAdd: $isUpdating)
+                AddProgressUpdate(isShowAdd: $isUpdating, book: book)
                     .environment(\.managedObjectContext, context)
             }
             
             Divider()
+            
             List {
                 if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate],
                    let bookUpdates = bookUpdatesUnsorted.sorted { $0.date! < $1.date! } {
@@ -46,15 +47,38 @@ struct BookCardDetail: View {
                             ProgressUpdateView(update: bookUpdates[index])
                         }
                     }
-//                    .onDelete { (indexSet) in
-//                        book.removeFromUpdates(bookUpdates[indexSet.first!])
-//                        try? context.save()
-//                    }
+                    //                    .onDelete { (indexSet) in
+                    //                        let bookUpdate = bookUpdates[indexSet.first!]
+                    //                        delete(bookUpdata: bookUpdate)
+                    //                    }
                 }
             }
         }
         .padding(.top, 10)
         .navigationBarTitle(Text(book.title ?? ""), displayMode: .inline)
+        .navigationBarItems(trailing: Button(action: {
+            showDelete.toggle()
+        }) {
+            Image(systemName: "trash")
+                .imageScale(.large)
+                .foregroundColor(Color("AccentColor"))
+                .actionSheet(isPresented: $showDelete, content: deleteBookAction)
+        })
+    }
+    
+    func delete(bookUpdata: CDBookUpdate) {
+        book.removeFromUpdates(bookUpdata)
+        try? context.save()
+    }
+    
+    func deleteBookAction() -> ActionSheet {
+        .init(title: Text("Delete this book?"), buttons: [
+            ActionSheet.Button.destructive(Text("Delete"), action: {
+                context.delete(book)
+                try? context.save()
+                presentation.wrappedValue.dismiss()
+            }),
+            ActionSheet.Button.cancel()
+        ])
     }
 }
-

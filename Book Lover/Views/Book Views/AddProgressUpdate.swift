@@ -10,15 +10,12 @@ import CoreData
 
 struct AddProgressUpdate: View {
     @Environment(\.managedObjectContext) var context
-
-    var book: CDBook
-
     @Binding var isShowAdd: Bool
-
     @State private var progress: CGFloat = 0
     @State private var text = ""
     
-    
+    var book: CDBook
+
     var body: some View {
         NavigationView {
             VStack {

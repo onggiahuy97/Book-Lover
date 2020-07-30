@@ -9,7 +9,6 @@ import SwiftUI
 
 struct BookCard: View {
     @Environment(\.managedObjectContext) var context
-    
     @ObservedObject var book: CDBook
     
     let width: CGFloat = 86

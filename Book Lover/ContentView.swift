@@ -11,7 +11,6 @@ import CoreData
 struct ContentView: View {
     @FetchRequest var coreDataBooks: FetchedResults<CDBook>
     @Environment(\.managedObjectContext) private var context
-    
     @State private var showSearching = false
     
     init() {
@@ -28,17 +27,17 @@ struct ContentView: View {
                         BookCard(book: coreDataBooks[index])
                     }
                 }
-                .onDelete { (indexSet) in
-                    guard let index = indexSet.first else { return }
-                    context.delete(coreDataBooks[index])
-                    try? context.save()
-                }
+//                .onDelete { (indexSet) in
+//                    guard let index = indexSet.first else { return }
+//                    context.delete(coreDataBooks[index])
+//                    try? context.save()
+//                }
             }
             .listStyle(PlainListStyle())
             .sheet(isPresented: $showSearching) {
                 SearchBookView(isShowSearh: $showSearching).environment(\.managedObjectContext, context)
             }
-            .navigationTitle(Text("Books"))
+            .navigationBarTitle(Text("Books"))
             .navigationBarItems(trailing: Button(action: {
                 showSearching = true
             }) {

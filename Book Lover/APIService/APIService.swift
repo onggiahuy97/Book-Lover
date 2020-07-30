@@ -19,7 +19,7 @@ class APIService {
     fileprivate func fetchGenericJSONData<T: Decodable>(urlString: String, completion: @escaping (Result<T, Error>) -> ()) {
         guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, resp, err) in
+        URLSession.shared.dataTask(with: url) { (data, _, err) in
             if let err = err {
                 completion(.failure(err))
                 return

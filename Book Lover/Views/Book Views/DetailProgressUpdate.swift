@@ -13,14 +13,15 @@ struct DetailProgressUpdate: View {
     
     @ObservedObject var update: CDBookUpdate
     
+    @State private var showEdit = false
     @State private var isDeleting = false
-    @State private var isEditingText = false
-    @State private var string = ""
+    @State private var text = ""
     
     @ObservedObject var book: CDBook
     
     var body: some View {
         Form {
+            // MARK: - Progress
             Section(header: Text("Progress")) {
                 HStack {
                     Text("Progress").foregroundColor(Color.secondary)
@@ -34,26 +35,35 @@ struct DetailProgressUpdate: View {
                 }
             }
             
-            Section(header: Text("Quick note")) {
+            // MARK: - Note
+            Section(header: HStack {
+                Text("Note")
+                Spacer()
                 Button(action: {
-                    isEditingText.toggle()
+                    showEdit = true
+                    text = update.note ?? ""
                 }) {
-                    if !isEditingText {
-                        Text(update.note ?? "")
-                    } else {
-                        TextField("", text: $string) {
-                            isEditingText = false
-                            update.note = string
-                            try? context.save()
-                        }
-                        .onAppear {
-                            string = update.note ?? ""
-                        }
-                    }
+                    Text("Edit").foregroundColor(Color("AccentColor"))
                 }
-                .foregroundColor(.black)
+            }) {
+                Text(update.note ?? "")
+            }
+            .sheet(isPresented: $showEdit, onDismiss: {
+                update.note = text
+                try? context.save()
+            }) {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: { showEdit = false }) { Text("Done") }
+                    }
+                    EditNoteView(text: $text)
+                    
+                }
+                .padding()
             }
             
+            // MARK: - Delete Note
             Section {
                 Button(action: {
                     isDeleting = true
