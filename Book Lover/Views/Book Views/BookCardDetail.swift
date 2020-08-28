@@ -47,10 +47,6 @@ struct BookCardDetail: View {
                             ProgressUpdateView(update: bookUpdates[index])
                         }
                     }
-                    //                    .onDelete { (indexSet) in
-                    //                        let bookUpdate = bookUpdates[indexSet.first!]
-                    //                        delete(bookUpdata: bookUpdate)
-                    //                    }
                 }
             }
         }
@@ -62,8 +58,8 @@ struct BookCardDetail: View {
             Image(systemName: "trash")
                 .imageScale(.large)
                 .foregroundColor(Color("AccentColor"))
-                .actionSheet(isPresented: $showDelete, content: deleteBookAction)
         })
+        .alert(isPresented: $showDelete, content: deleteBookWithAlert)
     }
     
     func delete(bookUpdata: CDBookUpdate) {
@@ -71,14 +67,11 @@ struct BookCardDetail: View {
         try? context.save()
     }
     
-    func deleteBookAction() -> ActionSheet {
-        .init(title: Text("Delete this book?"), buttons: [
-            ActionSheet.Button.destructive(Text("Delete"), action: {
-                context.delete(book)
-                try? context.save()
-                presentation.wrappedValue.dismiss()
-            }),
-            ActionSheet.Button.cancel()
-        ])
+    func deleteBookWithAlert() -> Alert {
+        Alert(title: Text("Delete this book?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Yes"), action: {
+            context.delete(book)
+            try? context.save()
+            presentation.wrappedValue.dismiss()
+        }))
     }
 }

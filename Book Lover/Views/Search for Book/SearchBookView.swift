@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct SearchBookView: View {
     @Environment(\.managedObjectContext) var context
@@ -57,7 +58,6 @@ struct SearchBookView: View {
                     message: Text("Add to library"),
                     primaryButton: .default(Text("Yes!"), action: {
                         pickThisBook(book: selectedBook!)
-                        isShowSearh = false
                     }),
                     secondaryButton: .cancel())
             }
@@ -65,10 +65,7 @@ struct SearchBookView: View {
     }
     
     fileprivate func pickThisBook(book: BookAPIResult) {
-        let selectedBook = CDBook(context: context)
-        selectedBook.title = book.trackName
-        selectedBook.author = book.artistName
-        selectedBook.progress = 0.01
+        
         
         URLSession.shared.dataTask(with: URL(string: book.artworkUrl100)!) { (data, _, err) in
             if let err = err {
@@ -76,11 +73,17 @@ struct SearchBookView: View {
                 return
             }
             guard let data = data else { return }
+            let selectedBook = CDBook(context: context)
+            selectedBook.title = book.trackName
+            selectedBook.author = book.artistName
+            selectedBook.progress = 0.01
             selectedBook.image = UIImage(data: data)?.jpegData(compressionQuality: 0.8)
         }.resume()
         
-        do { try context.save() } catch let err { print("Failed to save context", err) }
-        
+        do {
+            try context.save()
+            isShowSearh = false
+        } catch let err { print("Failed to save context", err) }
     }
 }
 

@@ -22,12 +22,12 @@ struct BookAPIDetailView: View {
                 .resizable()
                 .frame(width: width, height: width * scale)
                 .cornerRadius(3.0)
-                .shadow(radius: 10, x: 0, y: 5)
+                .shadow(radius: 5, x: 0, y: 5)
             
             VStack(alignment: .leading) {
                 Text(book.trackName)
                     .font(.headline)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color("textColor"))
                 
                 Text(book.artistName)
                     .font(.subheadline)
@@ -37,6 +37,7 @@ struct BookAPIDetailView: View {
             Spacer()
         }
         .padding(.horizontal)
-        .frame(width: screen.width, height: width * scale + 10)
+        .frame(height: width * scale + 10)
+//        .frame(width: screen.width, height: width * scale + 10)
     }
 }

@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3EA6A6ED24BE17530005C6A1"
-               BuildableName = "Book Lover v.10.app"
-               BlueprintName = "Book Lover v.10"
-               ReferencedContainer = "container:Book Lover v.10.xcodeproj">
+               BuildableName = "Book Lover.app"
+               BlueprintName = "Book Lover"
+               ReferencedContainer = "container:Book Lover.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EA6A6ED24BE17530005C6A1"
-            BuildableName = "Book Lover v.10.app"
-            BlueprintName = "Book Lover v.10"
-            ReferencedContainer = "container:Book Lover v.10.xcodeproj">
+            BuildableName = "Book Lover.app"
+            BlueprintName = "Book Lover"
+            ReferencedContainer = "container:Book Lover.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3EA6A6ED24BE17530005C6A1"
-            BuildableName = "Book Lover v.10.app"
-            BlueprintName = "Book Lover v.10"
-            ReferencedContainer = "container:Book Lover v.10.xcodeproj">
+            BuildableName = "Book Lover.app"
+            BlueprintName = "Book Lover"
+            ReferencedContainer = "container:Book Lover.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

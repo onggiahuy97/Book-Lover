@@ -48,20 +48,6 @@ struct DetailProgressUpdate: View {
             }) {
                 Text(update.note ?? "")
             }
-            .sheet(isPresented: $showEdit, onDismiss: {
-                update.note = text
-                try? context.save()
-            }) {
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: { showEdit = false }) { Text("Done") }
-                    }
-                    EditNoteView(text: $text)
-                    
-                }
-                .padding()
-            }
             
             // MARK: - Delete Note
             Section {
@@ -78,35 +64,44 @@ struct DetailProgressUpdate: View {
                 }
             }
         }
-        .actionSheet(isPresented: $isDeleting) {
-            delete()
+        .sheet(isPresented: $showEdit, onDismiss: {
+            update.note = text
+            try? context.save()
+        }) {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: { showEdit = false }) { Text("Done") }
+                }
+                EditNoteView(text: $text)
+                
+            }
+            .padding()
         }
+        .alert(isPresented: $isDeleting, content: deleteWithAlert)
     }
 }
 
 extension DetailProgressUpdate {
-    func delete() -> ActionSheet {
-        ActionSheet(title: Text("Delete this note?"), buttons: [
-            ActionSheet.Button.cancel(),
-            ActionSheet.Button.destructive(Text("Delete"), action: {
-                book.removeFromUpdates(update)
-                if book.updates?.count == 0 { book.progress = 0.01 }
-                if book.updates?.count == 1 {
-                    if let bookUpdates = book.updates?.allObjects as? [CDBookUpdate] {
-                        let progress = bookUpdates.first!.progress
-                        book.progress = progress
-                    }
+    func deleteWithAlert() -> Alert {
+        Alert(title: Text("Delete this update?"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Yes"), action: {
+            book.removeFromUpdates(update)
+            if book.updates?.count == 0 { book.progress = 0.01 }
+            if book.updates?.count == 1 {
+                if let bookUpdates = book.updates?.allObjects as? [CDBookUpdate] {
+                    let progress = bookUpdates.first!.progress
+                    book.progress = progress
                 }
-                if book.updates?.count ?? 0 > 1 {
-                    if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate] {
-                        let bookUpdatesSorted = bookUpdatesUnsorted.sorted { $0.date! < $1.date! }
-                        let progress = bookUpdatesSorted.last!.progress
-                        book.progress = progress
-                    }
+            }
+            if book.updates?.count ?? 0 > 1 {
+                if let bookUpdatesUnsorted = book.updates?.allObjects as? [CDBookUpdate] {
+                    let bookUpdatesSorted = bookUpdatesUnsorted.sorted { $0.date! < $1.date! }
+                    let progress = bookUpdatesSorted.last!.progress
+                    book.progress = progress
                 }
-                try? context.save()
-                presentation.wrappedValue.dismiss()
-            }),
-        ])
+            }
+            try? context.save()
+            presentation.wrappedValue.dismiss()
+        }))
     }
 }
